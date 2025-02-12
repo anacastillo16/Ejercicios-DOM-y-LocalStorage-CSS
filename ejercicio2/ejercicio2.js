@@ -1,122 +1,92 @@
+// Definición de variables necesarias
 let formulario = document.getElementById("formularioAgregar");
 let nombre = document.getElementById("name");
 let precio = document.getElementById("precio");
 let lista = document.getElementById("lista");
 
+// Función que se ejecutará cuando se envíe el formulario
 formulario.addEventListener("submit", (e) => {
+    // Evita que se recargue la página
     e.preventDefault();
 
+    // Obtiene el valor del precio
     let precioValue = parseFloat(precio.value);
 
+    // Añade el precio al producto
     let producto = document.createElement("li");
+    // Añade el producto a la lista
     producto.textContent = `${nombre.value} - ${precioValue}€`;
 
+    // Cambia el color del producto según su precio
     if (precioValue > 50) {
         producto.style.color = "red";
     } else if (precioValue >= 20 && precioValue <= 50) {
         producto.style.color = "green";
     }
 
+    // Añade el producto a la lista
     lista.appendChild(producto);
 
+    // Resetea el formulario
     nombre.value = "";
     precio.value = "";
 });
 
+// Definición de variables necesarias para copiar la lista
 let botonCopiar = document.getElementById("copiarLista");
 let listaCopiada = document.getElementById("listaCopiada");
 
+// Función que se ejecutará cuando se haga click en el botón de copia lista
 botonCopiar.addEventListener("click", () => {
+    // Resetea la lista copiada
     listaCopiada.innerHTML = "";
 
+    // Obtiene los productos de la lista
     let productos = document.querySelectorAll("#lista li");
 
+    // Recorre el array de productos y los copia a una nueva lista
     productos.forEach(producto => {
+        // Crea un nuevo elemento li
         let productoCopiado = document.createElement("li");
+        // Copia el contenido del producto
         productoCopiado.textContent = producto.textContent;
+        // Copia el color del producto
         productoCopiado.style.color = producto.style.color;
+        // Añade el producto copiado a la lista
         listaCopiada.appendChild(productoCopiado);
     });
 });
 
+// Definición de variables necesarias para el botón de eliminar
 let formularioEliminar = document.getElementById("formularioEliminar");
 
+// Función que se ejecutará cuando se envíe el formulario
 formularioEliminar.addEventListener("submit", (e) => {
+    // Evita que se recargue la página
     e.preventDefault();
 
+    // Obtiene el producto a eliminar
     let productoAEliminar = document.getElementById("productoAEliminar").value;
 
+    // Recorre los elementos de la lista copiada
     let elementosCOPIADOS = listaCopiada.getElementsByTagName("li");
+    // Recorre el array de elementos
     for (let i = 0; i < elementosCOPIADOS.length; i++) {
+        // Obtiene el nombre del producto
         let textoElemento = elementosCOPIADOS[i].textContent;
+        // Obtiene el nombre del elemento
         let nombreElemento = textoElemento.split(" - ")[0];
 
+        // Si el producto a eliminar es igual al nombre del elemento
         if (productoAEliminar.toLowerCase() == nombreElemento.toLowerCase()) {
+            // Cambia el estilo del elemento
             elementosCOPIADOS[i].style.textDecoration = "line-through";
+            // Cambia el color del elemento
             elementosCOPIADOS[i].style.color = "gray";
-        }let formulario = document.getElementById("formularioAgregar");
-        let nombre = document.getElementById("name");
-        let precio = document.getElementById("precio");
-        let lista = document.getElementById("lista");
-        
-        formulario.addEventListener("submit", (e) => {
-            e.preventDefault();
-        
-            let precioValue = parseFloat(precio.value);
-        
-            let producto = document.createElement("li");
-            producto.textContent = `${nombre.value} - ${precioValue}€`;
-        
-            if (precioValue > 50) {
-                producto.style.color = "red";
-            } else if (precioValue >= 20 && precioValue <= 50) {
-                producto.style.color = "green";
-            }
-        
-            lista.appendChild(producto);
-        
-            nombre.value = "";
-            precio.value = "";
-        });
-        
-        let botonCopiar = document.getElementById("copiarLista");
-        let listaCopiada = document.getElementById("listaCopiada");
-        
-        botonCopiar.addEventListener("click", () => {
-            listaCopiada.innerHTML = "";
-        
-            let productos = document.querySelectorAll("#lista li");
-        
-            productos.forEach(producto => {
-                let productoCopiado = document.createElement("li");
-                productoCopiado.textContent = producto.textContent;
-                productoCopiado.style.color = producto.style.color;
-                listaCopiada.appendChild(productoCopiado);
-            });
-        });
-        
-        let formularioEliminar = document.getElementById("formularioEliminar");
-        
-        formularioEliminar.addEventListener("submit", (e) => {
-            e.preventDefault();
-        
-            let productoAEliminar = document.getElementById("productoAEliminar").value;
-        
-            let elementosCOPIADOS = listaCopiada.getElementsByTagName("li");
-            for (let i = 0; i < elementosCOPIADOS.length; i++) {
-                let textoElemento = elementosCOPIADOS[i].textContent;
-                let nombreElemento = textoElemento.split(" - ")[0];
-        
-                if (productoAEliminar.toLowerCase() == nombreElemento.toLowerCase()) {
-                    elementosCOPIADOS[i].style.textDecoration = "line-through";
-                    elementosCOPIADOS[i].style.color = "gray";
-                }
-            }
-        
-            document.getElementById("productoAEliminar").value = "";
-        });
-        
+        }
     }
 
-    document.getElementById("productoAEliminar").value = "";
+    // Resetea el formulario
+    formularioEliminar.reset();
+
 });
