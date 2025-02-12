@@ -88,5 +88,4 @@ formularioEliminar.addEventListener("submit", (e) => {
 
     // Resetea el formulario
     formularioEliminar.reset();
-
 });

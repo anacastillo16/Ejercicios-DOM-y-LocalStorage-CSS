@@ -7,18 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Cabecera -->
     <header>
         <h1>Gestión de Biblioteca</h1>
     </header>
 
+    <!-- Contenido principal -->
     <main>
         <p>Campos a introducir: </p>
+        <!-- Formulario para registrar libros -->
         <form action="">
             <input type="text" name="ISBN" id="ISBN" placeholder="Introduce el ISBN">
             <input type="text" name="titulo" id="titulo" placeholder="Introduce el título">
             <input type="text" name="autor" id="autor" placeholder="Introduce el autor">
             <input type="number" name="publicacion" id="publicacion" placeholder="Introduce el año de publicación">
         </form>
+
+        <!-- Botones para registrar, mostrar, consultar, contar y modificar libros-->
         <div id="botones">
             <button id="registrar">Registrar</button>
             <button id="mostrar">Mostrar</button>
@@ -27,6 +32,7 @@
             <button id="modificar">Modificar Libro</button>
         </div>
 
+        <!-- Tabla para mostrar los libros -->
         <table id="resultado">
             <tr>
                 <th>ISBN</th>
@@ -34,49 +40,90 @@
                 <th>Autor</th>
                 <th>Publicación</th>
             </tr>
-
         </table>
-
     </main>
     
     <script>
+        // Función para registrar libros
         function registrarLibro() {
+            // Obtiene los valores del formulario
             let ISBN = document.getElementById("ISBN").value;
             let titulo = document.getElementById("titulo").value;
             let autor = document.getElementById("autor").value;
             let publicacion = document.getElementById("publicacion").value;
 
+            // Crea un objecto libro
             let libro = {ISBN, titulo, autor, publicacion};
 
+            // Guarda el libro en el localStorage
             localStorage.setItem(ISBN, JSON.stringify(libro));
 
+            // Mensaje de que todo ha salido bien
             alert("Libro registrado con éxito");
+            // Resetea el formulario
             document.querySelector("form").reset();
         }
 
+        //Creamos un evento y llamamos a la función registrarLibro
         let registrar = document.getElementById("registrar");
         registrar.addEventListener("click", function() {
             registrarLibro();
         });
 
+        // Función para mostrar libros
         function mostrarLibros() {
+            // Obtiene los libros del localStorage
             let libros = JSON.parse(localStorage.getItem("libros"));
+            // Crea la tabla
             let resultado = document.getElementById("resultado");
+            // Añade las cabeceras
             resultado.innerHTML = "<th>ISBN</th> <th>Título</th> <th>Autor</th> <th>Publicación</th>";
 
+            // Recorre el array de libros
             for (let i = 0; i < localStorage.length; i++) {
+                // Obtiene el ISBN
                 let ISBN = localStorage.key(i);
 
+                // Obtiene el libro
                 let libro = JSON.parse(localStorage.getItem(ISBN));
 
+                // Añade el libro a la tabla
                 resultado.innerHTML += `<tr><td>${libro.ISBN}</td><td>${libro.titulo}</td><td>${libro.autor}</td><td>${libro.publicacion}</td></tr>`;
             }
         }
 
+        //Creamos un evento y llamamos a la función mostrarLibros
         let mostrar = document.getElementById("mostrar");
         mostrar.addEventListener("click", function() {
             mostrarLibros();
         });
+
+
+        // Función para consultar libros
+        function consultarLibro() {
+            // Obtiene el ISBN
+            let ISBN = document.getElementById("ISBN").value;
+
+            // Comprueba que el ISBN no este vacio
+            if (!ISBN) {
+                alert("Introduce un ISBN");
+                return;
+            }
+
+            // Obtiene el libro
+            let libro = JSON.parse(localStorage.getItem(ISBN));
+
+            // Añade el libro a la tabla
+            let resultado = document.getElementById("resultado");
+            resultado.innerHTML = `<tr><td>${libro.ISBN}</td><td>${libro.titulo}</td><td>${libro.autor}</td><td>${libro.publicacion}</td></tr>`;
+        }
+
+        //Creamos un evento y llamamos a la función consultarLibro
+        let consultar = document.getElementById("consultar");
+        consultar.addEventListener("click", function() {
+            consultarLibro();
+        });
+
     </script>
 </body>
 </html>
