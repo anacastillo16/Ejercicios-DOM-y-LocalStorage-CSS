@@ -9,7 +9,7 @@ function registrarLibro() {
     // Crea un objecto libro
     let libro = {ISBN, titulo, autor, publicacion};
 
-    // Guarda el libro en el localStorage
+    // Guarda el libro en el localStorage, el stringify convierte un objeto JavaScript en una cadena de texto JSON, y el setItem guarda el libro en el localStorage usando el ISBN como clave
     localStorage.setItem(ISBN, JSON.stringify(libro));
 
     // Mensaje de que todo ha salido bien
@@ -38,7 +38,7 @@ function mostrarLibros() {
         // Obtiene el ISBN
         let ISBN = localStorage.key(i);
 
-        // Obtiene el libro
+        // Obtiene el libro, el parse analiza la cadena de texto json y la transforma en un objeto
         let libro = JSON.parse(localStorage.getItem(ISBN));
 
         // Añade el libro a la tabla
@@ -91,8 +91,11 @@ function contarLibros() {
     // Cuenta los libros del autor
     let contador = 0;
     for (let i = 0; i < localStorage.length; i++) {
+        // Obtiene el ISBN
         let ISBN = localStorage.key(i);
+        // Obtiene el libro
         let libro = JSON.parse(localStorage.getItem(ISBN));
+        // Comprueba si el autor es el mismo
         if (libro.autor == autor) {
             contador++;
         }
